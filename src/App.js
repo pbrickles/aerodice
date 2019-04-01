@@ -1,4 +1,5 @@
 import React from "react";
+import {reducer} from "./state/reducer";
 import {StateProvider} from "./state/StateProvider";
 import "./App.scss";
 import DiceContainer from "./components/DiceContainer";
@@ -8,30 +9,6 @@ const App = () => {
     results: [],
     diceAnimating: false,
     inBrew: false,
-  };
-
-
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "rollDice":
-        return {
-          ...state,
-          results: action.newResults,
-          diceAnimating: true,
-        };
-      case "stopRollingDice":
-        return {
-          ...state,
-          diceAnimating: action.animationStatus
-        }
-      case "setBrewStatus":
-        return {
-          ...state,
-          inBrew: action.inBrew,
-        };
-      default:
-        return state;
-    }
   };
 
   return (

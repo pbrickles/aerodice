@@ -3,12 +3,14 @@ import {useStateValue} from "../state/StateProvider";
 
 import Dice from "./Dice";
 import DiceButtons from "./DiceButtons";
+import BrewContainer from "./BrewContainer";
 
 const DiceContainer = props => {
-  const [{results}] = useStateValue();
+  const [{results, inBrew}] = useStateValue();
   return (
     <div>
-      {results && <Dice results={results} />}
+      {results && !inBrew && <Dice results={results} />}
+      {inBrew && <BrewContainer />}
       <DiceButtons />
     </div>
   );
