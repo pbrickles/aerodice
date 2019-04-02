@@ -3,7 +3,10 @@ import {useStateValue} from "../state/StateProvider";
 import {rollDice} from "../helpers/rollDice";
 
 const DiceButtons = () => {
-  const [{results, inBrew, diceAnimating}, dispatch] = useStateValue();
+  const [
+    {results, inBrew, diceAnimating, brewStep},
+    dispatch,
+  ] = useStateValue();
   const [showBrewButton, setShowBrewButton] = useState(false);
   const [showRollButton, setShowRollButton] = useState(false);
 
@@ -21,30 +24,59 @@ const DiceButtons = () => {
   }, [diceAnimating]);
   return (
     <div className="Dice-button-container">
-      {showBrewButton && (
+      {showBrewButton && !inBrew && (
         <button
           className="App-button"
-          onClick={() =>
+          onClick={() => {
             dispatch({
               type: "setBrewStatus",
               inBrew: !inBrew,
-            })
-          }
+            });
+            dispatch({
+              type: "resetBrew",
+            });
+          }}
         >
           Start Brew
         </button>
       )}
-      {inBrew && (
+      {inBrew && brewStep < results.steps.length && (
+        <>
+          <button
+            className="App-button"
+            onClick={() =>
+              dispatch({
+                type: "setBrewStatus",
+                inBrew: !inBrew,
+              })
+            }
+          >
+            Stop Brew
+          </button>
+
+          <button
+            onClick={() => {
+              dispatch({
+                type: "advanceBrewStep",
+              });
+            }}
+            className="App-button"
+          >
+            Next Step
+          </button>
+        </>
+      )}
+
+      {inBrew && brewStep === results.steps.length && (
         <button
-          className="App-button"
-          onClick={() =>
+          onClick={() => {
             dispatch({
-              type: "setBrewStatus",
-              inBrew: !inBrew,
-            })
-          }
+              type: "resetApp",
+            });
+          }}
+          className="App-button"
         >
-          Stop Brew
+          Reset
         </button>
       )}
       {!inBrew && showRollButton && (

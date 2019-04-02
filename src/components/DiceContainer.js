@@ -7,13 +7,24 @@ import BrewContainer from "./BrewContainer";
 
 const DiceContainer = props => {
   const [{results, inBrew, diceAnimating}] = useStateValue();
-  console.log(results)
   return (
-    <div>
-      {results && !inBrew && <Dice results={results} animating={diceAnimating} />}
-      {inBrew && <BrewContainer />}
-      <DiceButtons />
-    </div>
+    <>
+      {inBrew && (
+        <div>
+          <BrewContainer />
+        </div>
+      )}
+      <div>
+        {results && (
+          <Dice
+            results={results}
+            animating={diceAnimating}
+            shrink={inBrew ? true : false}
+          />
+        )}
+        <DiceButtons />
+      </div>
+    </>
   );
 };
 

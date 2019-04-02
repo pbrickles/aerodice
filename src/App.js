@@ -6,16 +6,12 @@ import DiceContainer from "./components/DiceContainer";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 
-const App = () => {
-const siteMeta = {
-  title: "AeroDice",
-  subTitle: "Make great Aeropress coffee recipies, without thinking!"
-}
+import {initialState} from "./state/initialState";
 
-  const initialState = {
-    results: [],
-    diceAnimating: false,
-    inBrew: false,
+const App = () => {
+  const siteMeta = {
+    title: "AeroDice",
+    subTitle: "Make great Aeropress coffee recipies, without thinking!",
   };
 
   return (

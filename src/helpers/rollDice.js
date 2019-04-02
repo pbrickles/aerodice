@@ -13,6 +13,7 @@ export const rollDice = () => {
       case "Grind":
         actions.push({
           step: 3,
+          type: "Grind",
           action: `Grind your coffee to ${
             results[side] === "Your Choice"
               ? "the consistency of your choice"
@@ -26,14 +27,17 @@ export const rollDice = () => {
         const temp = die.temperature[side];
         actions.push({
           step: 0,
+          type: "HeatWater",
           action: `Heat your water to ${temp}.`,
           data: null,
         });
         break;
       case "Ratio":
         const coffeeWeight = die.weight[side];
+
         actions.push({
           step: 2,
+          type: "WeighCoffee",
           action:
             coffeeWeight === "Your Choice"
               ? `Weigh out your chosen amount of coffee.`
@@ -41,15 +45,23 @@ export const rollDice = () => {
           data: null,
         });
         actions.push({
-          step: 5,
-          action: `Add the water to a total weight of ${
-            die.water[side].weight
-          }`,
-          data: null,
+          step: 6,
+          type: "AddWater",
+          action:
+            die.water[side].weight !== "Your Choice"
+              ? `Add the water to a total weight of ${die.water[side].weight}g`
+              : `Add however much water you think is appropriate`,
+          data: {
+            totalWater:
+              die.water[side].weight !== "Your Choice"
+                ? die.water[side].weight
+                : undefined,
+          },
         });
         if (die.water[side].dilute) {
           actions.push({
             step: 100,
+            type: "Dilute",
             action: `Dilute the coffee to taste and share with a loved one!`,
             data: null,
           });
@@ -59,17 +71,20 @@ export const rollDice = () => {
         const bloom = die.bloom[side];
         actions.push({
           step: 4,
+          type: "Method",
           action: `Add the coffee to your ${die.position[side]} AeroPress`,
           data: null,
         });
         if (bloom.time > 0) {
           actions.push({
             step: 5,
+            type: "Bloom",
             action: `Add ${
               bloom.water
-            } of water and allow to bloom for ${bloom.time / 1000} seconds`,
+            }g of water and allow to bloom for ${bloom.time / 1000} seconds`,
             data: {
               time: bloom.time,
+              water: bloom.water,
             },
           });
         }
@@ -78,6 +93,7 @@ export const rollDice = () => {
         if (die.stir[side] !== "No stir") {
           actions.push({
             step: 8,
+            type: "Stir",
             action: `Stir ${
               die.stir[side] !== " Your Choice"
                 ? die.stir[side]

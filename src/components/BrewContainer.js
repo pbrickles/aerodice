@@ -1,26 +1,58 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useStateValue} from "../state/StateProvider";
 import Timer from "./Timer";
+import BrewStep from "./BrewStep";
 
-const BrewContainer = props => {
-  const [{results}] = useStateValue();
-  const [step, setStep] = useState(0);
+const BrewContainer = () => {
+  const [{results, brewStep, water}, dispatch] = useStateValue();
+  const [bloomStep, setBloomStep] = useState(false);
+  const [waterMessage, setWaterMessage] = useState("");
+
+  const calculateWater = () => {
+    const bloomData = results.steps.filter(step => step.type === "Bloom");
+    const waterData = results.steps.filter(step => step.type === "AddWater");
+    const totalWater = waterData[0].data.totalWater
+      ? waterData[0].data.totalWater
+      : undefined;
+
+    if (bloomData.length > 0 && totalWater) {
+      const newWater = totalWater - bloomData[0].data.water;
+      dispatch({type: "calculateWater", waterTotal: newWater});
+      setBloomStep(true);
+      setWaterMessage(`Add the remaining ${water}g of water`);
+    }
+  };
+
+  useEffect(
+    () => {
+      if (brewStep === 0) {
+        calculateWater();
+      }
+
+      if (brewStep > results.steps.length) {
+        dispatch({
+          type: "resetBrew",
+        });
+      }
+    },
+    [brewStep],
+  );
 
   return (
     <div>
-      {step < results.steps.length ? (
+      {brewStep < results.steps.length ? (
         <>
-          <p>{results.steps[step].action}</p>
-          {results.steps[step].data && results.steps[step].data.time && (
-            <Timer time={results.steps[step].data.time} />
+          {bloomStep && results.steps[brewStep].type === "AddWater" ? (
+            <BrewStep action={waterMessage} />
+          ) : (
+            <BrewStep action={results.steps[brewStep].action} />
           )}
-          <button
-            onClick={() => {
-              setStep(step + 1);
-            }}
-          >
-            Next Step
-          </button>
+
+          {results.steps[brewStep].data &&
+            results.steps[brewStep].data.time && (
+              <Timer time={results.steps[brewStep].data.time} />
+            )}
+          
         </>
       ) : (
         <p>Enjoy your coffee!</p>

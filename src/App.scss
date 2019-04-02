@@ -26,6 +26,10 @@
     padding: 50px;
   }
 
+  &-logo {
+    width: 80px;
+  }
+
   &-footer {
     box-sizing: border-box;
     background-color: #282c34;
@@ -56,6 +60,15 @@
       display: inline-block;
       margin-bottom: 1rem;
       font-size: 10px;
+    }
+
+    &--shrink {
+      .App-dice__type {
+        font-size: 8px;
+      }
+      li {
+        margin-right: 0.5rem;
+      }
     }
   }
 }
