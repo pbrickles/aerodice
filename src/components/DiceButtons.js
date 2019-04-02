@@ -1,38 +1,85 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import {useStateValue} from "../state/StateProvider";
-import {rollDice} from "../data/diceOptions";
+import {rollDice} from "../helpers/rollDice";
 
 const DiceButtons = () => {
-  const [{results, inBrew}, dispatch] = useStateValue();
+  const [
+    {results, inBrew, diceAnimating, brewStep},
+    dispatch,
+  ] = useStateValue();
+  const [showBrewButton, setShowBrewButton] = useState(false);
+  const [showRollButton, setShowRollButton] = useState(false);
+
+  useEffect(() => {
+    if (!inBrew && results.results && !diceAnimating) {
+      setShowBrewButton(true);
+    } else {
+      setShowBrewButton(false);
+    }
+    if (!diceAnimating) {
+      setShowRollButton(true);
+    } else {
+      setShowRollButton(false);
+    }
+  }, [diceAnimating]);
   return (
     <div className="Dice-button-container">
-      {!inBrew && results.length > 0 && (
+      {showBrewButton && !inBrew && (
         <button
           className="App-button"
-          onClick={() =>
+          onClick={() => {
             dispatch({
               type: "setBrewStatus",
               inBrew: !inBrew,
-            })
-          }
+            });
+            dispatch({
+              type: "resetBrew",
+            });
+          }}
         >
           Start Brew
         </button>
       )}
-      {inBrew && results.length > 0 && (
+      {inBrew && brewStep < results.steps.length && (
+        <>
+          <button
+            className="App-button"
+            onClick={() =>
+              dispatch({
+                type: "setBrewStatus",
+                inBrew: !inBrew,
+              })
+            }
+          >
+            Stop Brew
+          </button>
+
+          <button
+            onClick={() => {
+              dispatch({
+                type: "advanceBrewStep",
+              });
+            }}
+            className="App-button"
+          >
+            Next Step
+          </button>
+        </>
+      )}
+
+      {inBrew && brewStep === results.steps.length && (
         <button
-          className="App-button"
-          onClick={() =>
+          onClick={() => {
             dispatch({
-              type: "setBrewStatus",
-              inBrew: !inBrew,
-            })
-          }
+              type: "resetApp",
+            });
+          }}
+          className="App-button"
         >
-          Stop Brew
+          Reset
         </button>
       )}
-      {!inBrew && (
+      {!inBrew && showRollButton && (
         <button
           className="App-button"
           onClick={() => {
@@ -45,10 +92,10 @@ const DiceButtons = () => {
                 type: "stopRollingDice",
                 animationStatus: false,
               });
-            }, 1400);
+            }, 1500);
           }}
         >
-          {results.length > 0 ? "Roll Again" : "Roll Dice"}
+          {results.results ? "Roll Again" : "Roll Dice"}
         </button>
       )}
     </div>
