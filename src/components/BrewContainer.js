@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import {useStateValue} from "../state/StateProvider";
 
+import {setupSteps} from "../helpers/setupSteps";
+
 const BrewContainer = (props) => {
   const [{results}] = useStateValue();
-  const [step, setStep] = useState(0);
+  const [steps, setUpSteps] = useState(setupSteps(results));
+  const [step, setStep] = useState(steps[0]);
 
   return (
     <div>
-      Brew Container
+      {console.log("Steps", steps)}
+      {console.log("FirstStep", step)}
     </div>
   )
 }

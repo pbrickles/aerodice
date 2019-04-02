@@ -4,18 +4,20 @@ import {diceOptions} from "../data/diceOptions";
 import Die from "./Die";
 
 const Dice = props => {
-  const {results} = props;
+  const {results, animating} = props;
   return (
     <>
-      {results && (
+      {results.results && (
         <ul className="App-dice">
-          {results.map((result, i) => {
+          {results.results.map((result, i) => {
             const faces = diceOptions[i].results.filter(face => {
               return face !== result.result;
             });
             return (
               <li key={i}>
-                <span className="App-dice__type">{diceOptions[i].type}</span>
+                {!animating && (
+                  <span className="App-dice__type">{diceOptions[i].type}</span>
+                )}
                 <Die result={result.result} faces={faces} />
               </li>
             );

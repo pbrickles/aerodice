@@ -9,7 +9,7 @@ export const reducer = (state, action) => {
     case "stopRollingDice":
       return {
         ...state,
-        diceAnimating: action
+        diceAnimating: action.animationStatus,
       }
     case "setBrewStatus":
       return {
