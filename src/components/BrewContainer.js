@@ -1,19 +1,32 @@
-import React, { useState } from 'react'
+import React, {useState} from "react";
 import {useStateValue} from "../state/StateProvider";
+import Timer from "./Timer";
 
-import {setupSteps} from "../helpers/setupSteps";
-
-const BrewContainer = (props) => {
+const BrewContainer = props => {
   const [{results}] = useStateValue();
-  const [steps, setUpSteps] = useState(setupSteps(results));
-  const [step, setStep] = useState(steps[0]);
+  const [step, setStep] = useState(0);
 
   return (
     <div>
-      {console.log("Steps", steps)}
-      {console.log("FirstStep", step)}
+      {step < results.steps.length ? (
+        <>
+          <p>{results.steps[step].action}</p>
+          {results.steps[step].data && results.steps[step].data.time && (
+            <Timer time={results.steps[step].data.time} />
+          )}
+          <button
+            onClick={() => {
+              setStep(step + 1);
+            }}
+          >
+            Next Step
+          </button>
+        </>
+      ) : (
+        <p>Enjoy your coffee!</p>
+      )}
     </div>
-  )
-}
+  );
+};
 
 export default BrewContainer;
