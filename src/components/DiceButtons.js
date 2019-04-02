@@ -73,6 +73,8 @@ const DiceButtons = () => {
             dispatch({
               type: "resetApp",
             });
+            setShowBrewButton(false);
+            setShowRollButton(true);
           }}
           className="App-button"
         >
