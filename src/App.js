@@ -11,7 +11,7 @@ import {initialState} from "./state/initialState";
 const App = () => {
   const siteMeta = {
     title: "AeroDice",
-    subTitle: "Make great Aeropress coffee recipies, without thinking!",
+    subTitle: "Make and brew random Aeropress coffee recipies!",
   };
 
   return (
