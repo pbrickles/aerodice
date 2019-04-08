@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from "react";
+import classnames from "classnames";
 import {useStateValue} from "../state/StateProvider";
 import {rollDice} from "../helpers/rollDice";
 
@@ -24,26 +25,10 @@ const DiceButtons = () => {
   }, [diceAnimating]);
   return (
     <div className="Dice-button-container">
-      {showBrewButton && !inBrew && (
-        <button
-          className="App-button"
-          onClick={() => {
-            dispatch({
-              type: "setBrewStatus",
-              inBrew: !inBrew,
-            });
-            dispatch({
-              type: "resetBrew",
-            });
-          }}
-        >
-          Start Brew
-        </button>
-      )}
       {inBrew && brewStep < results.steps.length && (
         <>
           <button
-            className="App-button"
+            className="App-button App-button--negative"
             onClick={() =>
               dispatch({
                 type: "setBrewStatus",
@@ -60,7 +45,7 @@ const DiceButtons = () => {
                 type: "advanceBrewStep",
               });
             }}
-            className="App-button"
+            className="App-button App-button--positive"
           >
             Next Step
           </button>
@@ -83,7 +68,10 @@ const DiceButtons = () => {
       )}
       {!inBrew && showRollButton && (
         <button
-          className="App-button"
+          className={classnames([
+            "App-button",
+            results.results ? "App-button--secondary" : undefined,
+          ])}
           onClick={() => {
             dispatch({
               type: "rollDice",
@@ -98,6 +86,22 @@ const DiceButtons = () => {
           }}
         >
           {results.results ? "Roll Again" : "Roll Dice"}
+        </button>
+      )}
+      {showBrewButton && !inBrew && (
+        <button
+          className="App-button App-button--positive"
+          onClick={() => {
+            dispatch({
+              type: "setBrewStatus",
+              inBrew: !inBrew,
+            });
+            dispatch({
+              type: "resetBrew",
+            });
+          }}
+        >
+          Start Brew
         </button>
       )}
     </div>

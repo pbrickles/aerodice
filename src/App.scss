@@ -22,8 +22,12 @@
 
   &-main {
     flex-grow: 2;
-    min-height: 200px;
-    padding: 50px;
+    padding: 5px;
+
+    @media screen and (min-width: 640px) {
+      min-height: 200px;
+      padding: 50px;
+    }
   }
 
   &-logo {
@@ -45,31 +49,28 @@
 
   &-button {
     padding: 0.875rem 1.25rem;
+    margin: 0 2rem 0.5rem;
     font-size: 0.95rem;
     background: white;
-  }
+    border: none;
+    border-radius: 2px;
 
-  &-dice {
-    list-style-type: none;
-
-    li {
-      display: inline-block;
-      margin-right: 2rem;
+    &--secondary {
+      background-color: rgb(78, 59, 59);
+      color: white;
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
     }
 
-    &__type {
-      display: inline-block;
-      margin-bottom: 1rem;
-      font-size: 10px;
+    &--positive {
+      background: rgb(62, 138, 62);
+      color: white;
     }
 
-    &--shrink {
-      .App-dice__type {
-        font-size: 8px;
-      }
-      li {
-        margin-right: 0.5rem;
-      }
+    &--negative {
+      padding: 0.5rem 1rem;
+      font-size: 0.875rem;
+      background: red;
     }
   }
 }

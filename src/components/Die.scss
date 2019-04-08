@@ -1,10 +1,35 @@
 .App-dice {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 2rem;
+
+  li {
+    display: inline-block;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+
+    @media screen and (min-width: 640px) {
+      margin-right: 2rem;
+    }
+  }
+
   .dice {
-    width: 90px;
-    height: 90px;
+    width: 60px;
+    height: 60px;
     position: relative;
     transform-style: preserve-3d;
     transform: rotateX(0deg) rotateY(0deg) translateX(0);
+
+    @media screen and (min-width: 640px) {
+      height: 90px;
+      width: 90px;
+    }
 
     &.animating {
       animation-name: rotate;
@@ -13,21 +38,35 @@
     }
 
     > div {
-      height: 90px;
-      width: 90px;
+      height: 100%;
+      width: 100%;
+      max-width: 60px;
+      max-height: 60px;
       position: absolute;
-      background: #b3b1b1;
+      background: rgb(245, 68, 4);
+      border-radius: 4px;
+      transition: height 0.2s ease, width 0.2s ease;
+
+      @media screen and (min-width: 640px) {
+        max-width: 90px;
+        max-height: 90px;
+        transition: max-height 0.2s ease, max-width 0.2s ease;
+      }
     }
 
     span {
-      font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
       height: 100%;
       width: 100%;
-      font-weight: bold;
+      font-size: 8px;
+
+      @media screen and (min-width: 640px) {
+        font-size: 12px;
+        font-weight: bold;
+      }
     }
 
     .front {
@@ -51,6 +90,14 @@
   }
 
   &--shrink {
+    .App-dice__type {
+      font-size: 8px;
+    }
+
+    li {
+      margin-right: 0.5rem;
+    }
+
     .dice {
       width: 50px;
       height: 50px;
@@ -62,6 +109,16 @@
       span {
         font-size: 8px;
       }
+    }
+  }
+
+  &__type {
+    display: none;
+    margin-bottom: 1rem;
+    font-size: 10px;
+
+    @media screen and (min-width: 640px) {
+      display: inline-block;
     }
   }
 
