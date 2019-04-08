@@ -2,8 +2,8 @@ import {diceOptions} from "../data/diceOptions";
 
 export const rollDice = () => {
   let actions = [
-    {step: 1, action: "Rinse the filter with hot water", data: null},
-    {step: 20, action: "Press with consistent pressure", data: null},
+    {step: 20, action: "Rinse the filter with hot water", data: null},
+    {step: 200, action: "Press with consistent pressure", data: null},
   ];
   const results = diceOptions.map(die => {
     const {type, results} = die;
@@ -12,7 +12,7 @@ export const rollDice = () => {
     switch (type) {
       case "Grind":
         actions.push({
-          step: 3,
+          step: 40,
           type: "Grind",
           action: `Grind your coffee to ${
             results[side] === "Your Choice"
@@ -26,7 +26,7 @@ export const rollDice = () => {
       case "Water Temperature":
         const temp = die.temperature[side];
         actions.push({
-          step: 0,
+          step: 10,
           type: "HeatWater",
           action: `Heat your water to ${temp}.`,
           data: null,
@@ -36,7 +36,7 @@ export const rollDice = () => {
         const coffeeWeight = die.weight[side];
 
         actions.push({
-          step: 2,
+          step: 30,
           type: "WeighCoffee",
           action:
             coffeeWeight === "Your Choice"
@@ -45,7 +45,7 @@ export const rollDice = () => {
           data: null,
         });
         actions.push({
-          step: 6,
+          step: 70,
           type: "AddWater",
           action:
             die.water[side].weight !== "Your Choice"
@@ -70,14 +70,14 @@ export const rollDice = () => {
       case "Method":
         const bloom = die.bloom[side];
         actions.push({
-          step: 4,
+          step: 50,
           type: "Method",
           action: `Add the coffee to your ${die.position[side]} AeroPress`,
           data: null,
         });
         if (bloom.time > 0) {
           actions.push({
-            step: 5,
+            step: 60,
             type: "Bloom",
             action: `Add ${
               bloom.water
@@ -92,7 +92,7 @@ export const rollDice = () => {
       case "Stir":
         if (die.stir[side] !== "No stir") {
           actions.push({
-            step: 8,
+            step: 80,
             type: "Stir",
             action: `Stir ${
               die.stir[side] !== " Your Choice"

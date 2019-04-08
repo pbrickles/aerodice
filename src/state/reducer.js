@@ -34,11 +34,6 @@ export const reducer = (state, action) => {
         ...state,
         brewStep: 0,
       };
-    case "calculateWater":
-      return {
-        ...state,
-        water: action.waterTotal,
-      };
     case "resetApp":
       return {
         ...state,

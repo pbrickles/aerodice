@@ -4,7 +4,7 @@ import Timer from "./Timer";
 import BrewStep from "./BrewStep";
 
 const BrewContainer = () => {
-  const [{results, brewStep, water}, dispatch] = useStateValue();
+  const [{results, brewStep}, dispatch] = useStateValue();
   const [bloomStep, setBloomStep] = useState(false);
   const [waterMessage, setWaterMessage] = useState("");
 
@@ -17,9 +17,8 @@ const BrewContainer = () => {
 
     if (bloomData.length > 0 && totalWater) {
       const newWater = totalWater - bloomData[0].data.water;
-      dispatch({type: "calculateWater", waterTotal: newWater});
       setBloomStep(true);
-      setWaterMessage(`Add the remaining ${water}g of water`);
+      setWaterMessage(`Add the remaining ${newWater}g of water`);
     }
   };
 
