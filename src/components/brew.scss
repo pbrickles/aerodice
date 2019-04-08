@@ -1,0 +1,10 @@
+.Brew {
+  &__step {
+    margin: 20px 0 40px;
+    font-size: 1.75rem;
+
+    @media screen and (min-width: 640px) {
+      font-size: 2rem;
+    }
+  }
+}

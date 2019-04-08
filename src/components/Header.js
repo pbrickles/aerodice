@@ -7,7 +7,7 @@ const Header = ({meta}) => {
     <header className="App-header">
       <h1>{title}</h1>
       <Logo className="App-logo" />
-      <p>{subTitle}</p>
+      <p className="App-header__subtitle">{subTitle}</p>
     </header>
   );
 };

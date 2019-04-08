@@ -3,6 +3,8 @@ import {useStateValue} from "../state/StateProvider";
 import Timer from "./Timer";
 import BrewStep from "./BrewStep";
 
+import "./brew.scss";
+
 const BrewContainer = () => {
   const [{results, brewStep}, dispatch] = useStateValue();
   const [bloomStep, setBloomStep] = useState(false);
@@ -38,7 +40,7 @@ const BrewContainer = () => {
   );
 
   return (
-    <div>
+    <div className="Brew__step">
       {brewStep < results.steps.length ? (
         <>
           {bloomStep && results.steps[brewStep].type === "AddWater" ? (

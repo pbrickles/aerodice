@@ -5,6 +5,7 @@
   padding: 0 1rem;
   text-align: center;
   background-color: #282c34;
+  font-family: 'Merriweather Sans', sans-serif;
 
   p {
     margin: 0 0 10px 0;
@@ -20,6 +21,32 @@
     color: white;
   }
 
+  &-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+
+    @media screen and (min-width: 640px) {
+      flex-direction: column;
+    }
+
+    h1 {
+      margin: 0.75rem 0;
+    }
+
+
+    &__subtitle {
+      font-size: 0.875rem;
+      flex-grow: 2;
+
+      @media screen and (min-width: 640px) {
+        font-size: 1rem;
+      }
+    }
+  }
+
   &-main {
     flex-grow: 2;
     padding: 5px;
@@ -31,8 +58,13 @@
   }
 
   &-logo {
-    width: 80px;
-    margin-bottom: 1rem;
+    width: 40px;
+    margin: 0.75rem 0;
+
+    @media screen and (min-width: 640px) {
+      width: 80px;
+      margin: 0 0 1rem;
+    }
   }
 
   &-footer {
@@ -51,6 +83,7 @@
     padding: 0.875rem 1.25rem;
     margin: 0 2rem 0.5rem;
     font-size: 0.95rem;
+    font-weight: 700;
     background: white;
     border: none;
     border-radius: 2px;
